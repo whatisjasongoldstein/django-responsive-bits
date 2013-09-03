@@ -16,12 +16,11 @@ or something close to it.
 
 ### Setup &amp; Usages:
 
-    Put `responsive_bits` in INSTALLED_APPS.
+Put `responsive_bits` in INSTALLED_APPS.
 
-    A newish version of jQuery is required.
+A newish version of jQuery is required.
 
-    Add `<script src="{{ STATIC_URL }}js/deferred-images.js">` in your base template.
-
+Add `<script src="{{ STATIC_URL }}js/deferred-images.js">` in your base template.
 
     {% load thumanils responsive_tags %}
     
