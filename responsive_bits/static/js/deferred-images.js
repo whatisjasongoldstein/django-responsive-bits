@@ -5,14 +5,24 @@
 
 This examines the image tag's width, and finds the nearest suitable thumbnail without going over.
 
+You can also set data-retina="1" if you want to show HD images for retina devices.
+
 */
 (function(){
+
     var images = $("[data-img-sizes]");
     images.each(function(i){
+
         var img = images[i];
-        sizes = img.getAttribute('data-img-sizes');
+        sizes = img.getAttribute('data-img-sizes'); // Get JSON as a string.
         sizes = JSON.parse(sizes);
         var img_width = img.width;
+
+        // If data-retina is set, get images that are suitable for this pixel density as well
+        if (window.devicePixelRatio !== undefined && img.getAttribute("data-retina")){
+            img_width = img_width * window.devicePixelRatio;
+        }
+
         var new_src = img.src;
         var new_src_size = 0;
         for (key in sizes){

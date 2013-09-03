@@ -38,6 +38,9 @@ Always go smallest to largest.
 
 Setting `src` is optional, but if you don't your image will be blank without javascript, and people living in 1998 will laugh at you.
 
+You can also support retina devices by adding `data-retina="true"` (or any value), and the image width used to decide which thumbnail to use will be multiplied by the device's pixel density. Use this wisely; just because I have a nice screen
+doesn't mean the coffee shop wifi or 3G connection isn't going to wimper when you start throwing giant images at me.
+
 Requires easy-thumbnails.
 
 
@@ -48,7 +51,6 @@ I know, I know. Coming soon.
 
 ### TODO
 
-* Optional retina support. I'm not convinced it's wise to give retina devices HD images all the time, but it should be a flag.
 * Tests.
 * More features so this isn't a sad little repo with one thing in it.
 
