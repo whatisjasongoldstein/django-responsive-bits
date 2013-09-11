@@ -13,9 +13,9 @@ def image_sizes(**kwargs):
 
     Don't wrap it in quotes.
 
-    <img data-src-sizes={% image_sizes 0=small_image_easythumb 300=medium_image_easythumb %}>
+    <img data-src-sizes={% image_sizes 0=small_image_easythumb.url 300=medium_image_easythumb.url %}>
     """
     for k, v in kwargs.items():
-        kwargs[k] = v.url
+        kwargs[k] = v
     
     return "'{}'".format(json.dumps(kwargs))

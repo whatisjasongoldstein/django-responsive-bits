@@ -18,6 +18,8 @@ or something close to it.
 
 Put `responsive_bits` in INSTALLED_APPS.
 
+#### Image Tags
+
 A newish version of jQuery is required.
 
 Add `<script src="{{ STATIC_URL }}js/deferred-images.js">` in your base template.
@@ -29,18 +31,18 @@ Add `<script src="{{ STATIC_URL }}js/deferred-images.js">` in your base template
     {% thumbnail object.image 1200x720 crop=",1" as large_img %}
     {% thumbnail object.image 1600x960 crop=",1" as massive_img %}
 
-    <img data-img-sizes={% image_sizes 1=small_img 900=medium_img 1200=large_img 1500=massive_img %} src="{{ small_img }}">
+    <img data-img-sizes={% image_sizes 1=small_img.url 900=medium_img.url 1200=large_img.url 1500=massive_img.url %} src="{{ small_img }}">
 
 And that's it. You get the small version by default, the medium version if the image is at least 900px wide, etc.
 
 Always go smallest to largest.
 
-Setting `src` is optional, but if you don't your image will be blank without javascript, and people living in 1998 will laugh at you.
+Setting `src` is optional, but if you don't your image will be blank without javascript, and people living in 1998 will laugh at you. You also risk a flash of empty image.
 
 You can also support retina devices by adding `data-retina="true"` (or any value), and the image width used to decide which thumbnail to use will be multiplied by the device's pixel density. Use this wisely; just because I have a nice screen
 doesn't mean the coffee shop wifi or 3G connection isn't going to wimper when you start throwing giant images at me.
 
-Requires easy-thumbnails.
+My example uses [Easy Thumbnails](https://github.com/SmileyChris/easy-thumbnails) (`pip install easy-thumbnails`), but virtually any library should be fine. The important part is that you can pass the thumbnail urls in as variables.
 
 
 ### On the Sad, Shameful Lack of Tests
