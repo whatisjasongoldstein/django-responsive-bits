@@ -18,8 +18,6 @@ or something close to it.
 
 Put `responsive_bits` in INSTALLED_APPS.
 
-#### Image Tags
-
 A newish version of jQuery is required.
 
 Add `<script src="{{ STATIC_URL }}js/deferred-images.js">` in your base template.
@@ -43,6 +41,34 @@ You can also support retina devices by adding `data-retina="true"` (or any value
 doesn't mean the coffee shop wifi or 3G connection isn't going to wimper when you start throwing giant images at me.
 
 My example uses [Easy Thumbnails](https://github.com/SmileyChris/easy-thumbnails) (`pip install easy-thumbnails`), but virtually any library should be fine. The important part is that you can pass the thumbnail urls in as variables.
+
+
+## Background Images
+
+Some people prefer using background images. The advantage is the request isn't blocking, there's no duplicate requests, and resizing "just works". There's a tag for that too.
+
+    {% load thumanils responsive_tags %}
+
+    {% thumbnail object.image 600x360 crop=",1" as small_img %}
+    {% thumbnail object.image 1000x600 crop=",1" as large_img %}
+    {% thumbnail object.image 1200x720 crop=",1" as huge_img %}
+
+    <figure id="#foobar"></figure>
+    {% image_sizes_css selector="#foobar" default=small_img.url 1280=large_img.url 1680=huge_img.url %}
+
+This will output...
+
+    <style type="text/css">
+        #foobar {background-image: url('default-image.jpg');}
+        @media (min-width: 1280px){
+            #foobar {background-image: url('large-image.jpg');}
+        }
+        @media (min-width: 1680px){
+            #foobar {background-image: url('huge-image.jpg');}
+        }
+    </style>
+
+I'm on the fence about whether the templatetag abstraction is actually more elegant than just writing the snippet. I'm also considering a javascript-driven solution that measures the image itself. Feedback welcome.
 
 
 ### On the Sad, Shameful Lack of Tests
