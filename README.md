@@ -14,11 +14,13 @@ That's all well and good, but it seems like it would be better to examine the im
 so if your image is 300 pixels wide, you just know that you probably want the 300px thumbnail,
 or something close to it.
 
-### Setup &amp; Usages:
+### Setup:
 
 Put `responsive_bits` in INSTALLED_APPS.
 
 A newish version of jQuery is required.
+
+### Usages:
 
 Add `<script src="{{ STATIC_URL }}js/deferred-images.js">` in your base template.
 
@@ -40,12 +42,24 @@ Setting `src` is optional, but if you don't your image will be blank without jav
 You can also support retina devices by adding `data-retina="true"` (or any value), and the image width used to decide which thumbnail to use will be multiplied by the device's pixel density. Use this wisely; just because I have a nice screen
 doesn't mean the coffee shop wifi or 3G connection isn't going to wimper when you start throwing giant images at me.
 
-My example uses [Easy Thumbnails](https://github.com/SmileyChris/easy-thumbnails) (`pip install easy-thumbnails`), but virtually any library should be fine. The important part is that you can pass the thumbnail urls in as variables.
+#### Background Images
+
+Of course, sometimes you might want to set a background-image on an element instead. Do this by setting the `data-as-bg` parameter.
+
+    {% thumbnail object.image 200x100 crop=",1" as small_img %}
+    {% thumbnail object.image 300x150 crop=",1" as medium_img %}
+    {% thumbnail object.image 500x250 crop=",1" as large_img %}
+
+    <div class="art" data-as-bg="1" data-img-sizes={% image_sizes 1=small_img.url 200=medium_img.url 400=large_img.url %} 
+        style="background-image: {{ small_img }};"></div>
+
+My examples use [Easy Thumbnails](https://github.com/SmileyChris/easy-thumbnails) (`pip install easy-thumbnails`), but virtually any library should be fine. The important part is that you can pass the thumbnail urls in as variables.
 
 
-## Background Images
+### Background Images without Javascript
 
-Some people prefer using background images. The advantage is the request isn't blocking, there's no duplicate requests, and resizing "just works". There's a tag for that too.
+You can also just spit out CSS as media queries. This approach will work with resizing browsers and doesn't require javascript,
+but it outputs an image based on the width of the page rather than the width of the element. That's not a bad thing, but it makes your components a little less portable.
 
     {% load thumanils responsive_tags %}
 
