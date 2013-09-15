@@ -1,9 +1,10 @@
 from django.conf import settings
 from django.template import Template, Context
 
-settings.configure()
-settings.INSTALLED_APPS = ('responsive_bits',)
-
+if not settings.configured:
+    settings.configure()
+    settings.INSTALLED_APPS = ('responsive_bits',)
+    
 
 def test_image_sizes():
     """ Test the template tag. """
