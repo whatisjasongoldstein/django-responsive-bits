@@ -12,33 +12,40 @@ You can also set data-retina="1" if you want to show HD images for retina device
 */
 (function(){
 
-    var images = $("[data-img-sizes]");
-    images.each(function(i){
-        var img = images[i];
-        sizes = img.getAttribute('data-img-sizes'); // Get JSON as a string.
-        sizes = JSON.parse(sizes);
-        var img_width = img.width || img.offsetWidth;
+    var load_best_images = function(){
+        console.log("!");
+        var images = $("[data-img-sizes]");
+        images.each(function(i){
+            var img = images[i];
+            sizes = img.getAttribute('data-img-sizes'); // Get JSON as a string.
+            sizes = JSON.parse(sizes);
+            var img_width = img.width || img.offsetWidth;
 
-        // If data-retina is set, get images that are suitable for this pixel density as well
-        if (window.devicePixelRatio !== undefined && img.getAttribute("data-retina")){
-            img_width = img_width * window.devicePixelRatio;
-        }
-
-        var new_src = img.src;
-        var new_src_size = 0;
-        for (key in sizes){
-            key = parseInt(key, 10);
-            if (key <= img_width && key > new_src_size){
-                new_src = sizes[key];
-                new_src_size = key;
+            // If data-retina is set, get images that are suitable for this pixel density as well
+            if (window.devicePixelRatio !== undefined && img.getAttribute("data-retina")){
+                img_width = img_width * window.devicePixelRatio;
             }
-        }
 
-        if (img.getAttribute("data-as-bg")) {
-            img.style.setProperty("background-image", "url(" + new_src + ")");
-        } else {
-            img.src = new_src;
-        }
+            var new_src = img.src;
+            var new_src_size = 0;
+            for (key in sizes){
+                key = parseInt(key, 10);
+                if (key <= img_width && key > new_src_size){
+                    new_src = sizes[key];
+                    new_src_size = key;
+                }
+            }
 
-    });
+            if (img.getAttribute("data-as-bg")) {
+                img.style.setProperty("background-image", "url(" + new_src + ")");
+            } else {
+                img.src = new_src;
+            }
+        });
+    };
+
+    load_best_images();
+    $(window).on('resize orientationchange', _.debounce(load_best_images, 250));
+
+
 })();
