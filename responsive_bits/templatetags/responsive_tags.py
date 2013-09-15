@@ -20,25 +20,3 @@ def image_sizes(**kwargs):
     
     return "'{}'".format(json.dumps(kwargs))
 
-
-@register.simple_tag
-def image_sizes_css(selector="", default="", **kwargs):
-    """
-    Pass a selector, a default size, and kwargs as min-img-width=url
-
-    <figure id="#foobar"></figure>
-    {% image_sizes_css selector="#foobar" default=default_image 1024=medium_image 1680=large_image %}
-
-    """
-    default = "{} {{ background-image: url('{}'); }}".format(selector, default)
-    rules = [default, ]
-    for k, v in kwargs.items():
-        rule = """
-        @media (min-width: {width}px){{
-            {selector} {{ background-image: url('{url}') }};
-        }}
-        """.format(selector=selector, width=k, url=v)
-        rules.append(rule)
-    rules = "\n".join([r for r in rules])
-    html = """<style type="text/css">{}</style>""".format(rules)
-    return html
