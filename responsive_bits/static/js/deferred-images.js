@@ -13,7 +13,6 @@ You can also set data-retina="1" if you want to show HD images for retina device
 (function(){
 
     var load_best_images = function(){
-        console.log("!");
         var images = $("[data-img-sizes]");
         images.each(function(i){
             var img = images[i];
