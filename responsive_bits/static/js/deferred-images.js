@@ -1,7 +1,8 @@
 
 /* IMPROVED DEFER IMG
 =====================
-<img data-img-sizes="{&quot;50&quot;: &quot;small_thumb.jpg&quot;, &quot;500&quot;: &quot;medium.jpg&quot;, &quot;1000&quot;: &quot;big.jpg&quot; }">
+<img data-img-sizes="{&quot;50&quot;: &quot;small_thumb.jpg&quot;, &quot;500&quot;: 
+&quot;medium.jpg&quot;, &quot;1000&quot;: &quot;big.jpg&quot; }">
 
 This examines the image tag's width, and finds the nearest suitable thumbnail without going over.
 
@@ -13,9 +14,8 @@ You can also set data-retina="1" if you want to show HD images for retina device
 (function(){
 
     var load_best_images = function(){
-        var images = $("[data-img-sizes]");
-        images.each(function(i){
-            var img = images[i];
+        var $images = $("[data-img-sizes]");
+        _.each($images, function(img, i){
             sizes = img.getAttribute('data-img-sizes'); // Get JSON as a string.
             sizes = JSON.parse(sizes);
             var img_width = img.width || img.offsetWidth;
@@ -25,6 +25,7 @@ You can also set data-retina="1" if you want to show HD images for retina device
                 img_width = img_width * window.devicePixelRatio;
             }
 
+            var bgsrc;
             var new_src = img.src;
             var new_src_size = 0;
             for (key in sizes){
@@ -36,15 +37,20 @@ You can also set data-retina="1" if you want to show HD images for retina device
             }
 
             if (img.getAttribute("data-as-bg")) {
-                img.style.setProperty("background-image", "url(" + new_src + ")");
+                bgsrc = "url(" + new_src + ")";
+                if (window.getComputedStyle(img)["background-image"] !== bgsrc) {
+                    img.style.setProperty("background-image", bgsrc);
+                }
             } else {
-                img.src = new_src;
+                if (img.src !== new_src) {
+                    img.src = new_src;
+                }
             }
         });
     };
 
     load_best_images();
     $(window).on('resize orientationchange', _.debounce(load_best_images, 250));
-
+    $(window).on("newcontent", load_best_images);
 
 })();
