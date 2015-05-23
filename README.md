@@ -1,3 +1,9 @@
+This is all obsolete courtesy of the picture element and srcset, which are the new correct way to solve these problems.
+
+[Learn more.](http://responsiveimages.org/)
+
+----
+
 Django Responsive Bits
 ======================
 
