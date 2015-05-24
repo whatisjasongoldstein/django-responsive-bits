@@ -1,24 +1,22 @@
-This is all obsolete courtesy of the picture element and srcset, which are the new correct way to solve these problems.
-
-[Learn more.](http://responsiveimages.org/)
-
-----
-
 Django Responsive Bits
 ======================
 
 The earlier beginnings of a responsive utility belt. I'll add things as I need 
 them/have time to break them out of my other sites.
 
-**Fair warning:** this is literally a first pass. I may have written it while on a plane. I don't know if it works in IE.
+I use this in production, but don't guarantee much of anything.
 
 ## Images
 
-Most [responsive image implementations](https://github.com/scottjehl/picturefill) look at the size of the document to decide what to do.
+The [Picture element](http://responsiveimages.org/) looks at the size of the document to decide what to do.
 (See CSS background images with media queries.) 
+
 That's all well and good, but it seems like it would be better to examine the image itself,
 so if your image is 300 pixels wide, you just know that you probably want the 300px thumbnail,
 or something close to it.
+
+You should probably use the picture element or srcset, but you find your layout hard to achieve in
+these tools, the `image_sizes` may work.
 
 ### Setup:
 
