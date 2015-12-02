@@ -18,7 +18,7 @@ def image_sizes(**kwargs):
     for k, v in kwargs.items():
         kwargs[k] = v
     
-    return "'{}'".format(json.dumps(kwargs))
+    return mark_safe("'{}'".format(json.dumps(kwargs)))
 
 
 @register.filter
