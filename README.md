@@ -1,6 +1,10 @@
 Django Responsive Bits
 ======================
 
+*This was built in the earlier days of responsive design. The technology has evolved a lot and I wouldn't recommend using it.*
+
+------
+
 The earlier beginnings of a responsive utility belt. I'll add things as I need 
 them/have time to break them out of my other sites.
 
